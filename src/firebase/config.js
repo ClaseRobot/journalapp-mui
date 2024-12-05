@@ -20,3 +20,5 @@ export const FirebaseApp = initializeApp(firebaseConfig);
 
 export const FirebaseAuth = getAuth(FirebaseApp)
 export const FirebaseDB = getFirestore(FirebaseApp)
+
+// Crear otra app desde Firebase, esta configuracion esta dada de baja
