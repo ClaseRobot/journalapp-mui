@@ -1,12 +1,15 @@
+import { useMemo } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Google } from '@mui/icons-material'
 import { Button, Link, TextField, Typography, Grid2 } from '@mui/material'
 import { AuthLayout } from '../layout/AuthLayout'
-import { Google } from '@mui/icons-material'
-import { Link as RouterLink } from 'react-router-dom'
 import { useForm } from '../../hooks/useForm'
-import { useDispatch } from 'react-redux'
 import { checkingAuthentication, startGoogleSignIn } from '../../store/auth/thunks'
 
 export const LoginPage = () => {
+
+  const { status } = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
 
@@ -14,6 +17,8 @@ export const LoginPage = () => {
     email: '',
     password: ''
   })
+
+  const isAuthenticating = useMemo(() => status === 'checking', [status])
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -42,10 +47,10 @@ export const LoginPage = () => {
           </Grid2>
           <Grid2 container spacing={2} sx={{ mt: 2, mb: 1}}>
             <Grid2 xs={12} sm={6}>
-              <Button type='submit' variant='contained' >Login</Button>
+              <Button disabled={isAuthenticating} type='submit' variant='contained' >Login</Button>
             </Grid2>
             <Grid2 xs={12} sm={6}>
-              <Button onClick={onGoogleSingnIn} variant='contained' >
+              <Button disabled={isAuthenticating} onClick={onGoogleSingnIn} variant='contained' >
                 <Google />
                 <Typography sx={{ ml: 1 }}>Google</Typography>
               </Button>

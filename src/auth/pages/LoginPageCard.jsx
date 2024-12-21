@@ -1,19 +1,24 @@
 // import { Card, CardHeader, CardContent } from '@/components/ui/card'
+import { useMemo } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Box, Button, TextField, Typography, Link, Container, Paper, Avatar, FormControlLabel, Grid2 } from '@mui/material'
-import { useDispatch } from 'react-redux'
-import { useForm } from '../../hooks/useForm'
-import { checkingAuthentication, startGoogleSignIn } from '../../store/auth/thunks'
 import { CheckBox, Google } from '@mui/icons-material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link as RouterLink } from 'react-router-dom'
+import { checkingAuthentication, startGoogleSignIn } from '../../store/auth/thunks'
+import { useForm } from '../../hooks/useForm'
 
 export const LoginCard = () => {
   const dispatch = useDispatch()
+
+  const { status } = useSelector(state => state.auth)
 
   const { email, password, onInputChange, onResetForm } = useForm({
     email: '',
     password: ''
   })
+
+  const isAuthenticating = useMemo(() => status === 'checking', [status])
 
   const onGoogleSingIn = () => {
     // Implemenar logica de registro con google
@@ -46,12 +51,12 @@ export const LoginCard = () => {
           <FormControlLabel sx={{ ml: '-2px', mt: 1 }} control={<CheckBox value='remember' color='primary'/> } label='Remember me' />
           <Grid2 container columnSpacing={2}>
             <Grid2 size={6}>
-              <Button type='submit' variant='contained' fullWidth sx={{ mt: 1 }}>
+              <Button disabled={isAuthenticating} type='submit' variant='contained' fullWidth sx={{ mt: 1 }}>
                 Sign In
               </Button>
             </Grid2>
             <Grid2 size={6}>
-              <Button onClick={onGoogleSingIn} variant='contained' fullWidth sx={{ mt: 1 }}>
+              <Button disabled={isAuthenticating} onClick={onGoogleSingIn} variant='contained' fullWidth sx={{ mt: 1 }}>
                 <Google />
                 <Typography sx={{ ml: 1, fontWeight: 'bold', fontSize: 'normal' }}>Google</Typography>
               </Button>
@@ -60,12 +65,12 @@ export const LoginCard = () => {
         </Box>
         <Grid2 container justifyContent='space-between' sx={{ mt: 1 }}>
           <Grid2 item='true'>
-            <Link component={RouterLink} to='/forgot' sx={{ textDecoration: 'none'}}>
+            <Link component={RouterLink} to='/auth/forgot' sx={{ textDecoration: 'none'}}>
               Forgot Password?
             </Link>
           </Grid2>
           <Grid2 item='true'>
-            <Link component={RouterLink} to='/register' sx={{ textDecoration: 'none'}}>
+            <Link component={RouterLink} to='/auth/register' sx={{ textDecoration: 'none'}}>
               Sign Up
             </Link>
           </Grid2>
