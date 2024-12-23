@@ -8,7 +8,7 @@ export const AppRouter = () => {
     <Routes>
       {/* Login y registro */}
       <Route path="/auth/*" element={<AuthRoutes />}/>
-
+      
       <Route path="/*" element={<JournalRoutes />} />
       {/* <Route path="/*" element={<AuthRoutes />} /> */}
     </Routes>
