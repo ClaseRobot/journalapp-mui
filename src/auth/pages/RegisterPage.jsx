@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useMemo, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
-import { Box, Button, Container, Link, Paper, Typography } from "@mui/material"
+import { Alert, Box, Button, Container, Link, Paper, Typography } from "@mui/material"
 import { TextField } from '@mui/material'
 import  Grid  from '@mui/material/Grid2'
 import { useForm } from "../../hooks/useForm"
@@ -24,7 +24,9 @@ const formValidation = {
 export const RegisterPage = () => {
 
   const dispatch = useDispatch()
-
+  const { status, errorMessage } = useSelector(state => state.auth)
+  const isChekcingAuthentication = useMemo(() => status === 'checking', [status])
+  console.log('status',status, 'errorMessage', errorMessage)
   const [ formSubmited, setFormSubmitted ] = useState(false)
   
   const { 
@@ -35,7 +37,7 @@ export const RegisterPage = () => {
   const onSubmit = (e) => {
     e.preventDefault()
     setFormSubmitted(true)
-    console.log(formState)
+    // console.log(formState)
 
     if( !isFormValid ) return
 
@@ -59,9 +61,12 @@ export const RegisterPage = () => {
             
           
 
-          <Grid container spacing={2} sx={{ mt: 2, mb: 1}}>
+          <Grid container direction='column' spacing={2} sx={{ mt: 2, mb: 1}}>
+            <Grid display={!!errorMessage ? '' : 'none'} xs={12}>
+              <Alert severity='error'>{ errorMessage }</Alert>
+            </Grid>
             <Grid xs={12}>
-              <Button type='submit' variant='contained' >Crear cuenta</Button>
+              <Button disabled={isChekcingAuthentication} type='submit' variant='contained' >Crear cuenta</Button>
             </Grid>
           </Grid>
 

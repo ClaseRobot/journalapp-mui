@@ -2,16 +2,16 @@
 import { useMemo } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Box, Button, TextField, Typography, Link, Container, Paper, Avatar, FormControlLabel, Grid2 } from '@mui/material'
+import { Box, Button, TextField, Typography, Link, Container, Paper, Avatar, FormControlLabel, Grid2, Alert } from '@mui/material'
 import { CheckBox, Google } from '@mui/icons-material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { checkingAuthentication, startGoogleSignIn } from '../../store/auth/thunks'
+import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth/thunks'
 import { useForm } from '../../hooks/useForm'
 
 export const LoginCard = () => {
   const dispatch = useDispatch()
 
-  const { status } = useSelector(state => state.auth)
+  const { status, errorMessage } = useSelector(state => state.auth)
 
   const { email, password, onInputChange, onResetForm } = useForm({
     email: '',
@@ -32,8 +32,9 @@ export const LoginCard = () => {
     console.log('Login con: ', email, password)
 
     dispatch(checkingAuthentication(email, password))
+    dispatch(startLoginWithEmailPassword( {email, password} ))
 
-    onResetForm()
+    // onResetForm()
   }
   // Paper es un conenedor con un borde sombreado 
   return (
@@ -49,6 +50,9 @@ export const LoginCard = () => {
           <TextField name='email' onChange={onInputChange} type='email' value={email} placeholder='Enter email' fullWidth required autoFocus sx={{ mb: 2 }} />
           <TextField name='password' onChange={onInputChange} type='password' value={password} placeholder='Enter password' fullWidth required />
           <FormControlLabel sx={{ ml: '-2px', mt: 1 }} control={<CheckBox value='remember' color='primary'/> } label='Remember me' />
+          <Box display={!!errorMessage ? '' : 'none'}>
+            <Alert severity='error'>{ errorMessage }</Alert>
+          </Box>
           <Grid2 container columnSpacing={2}>
             <Grid2 size={6}>
               <Button disabled={isAuthenticating} type='submit' variant='contained' fullWidth sx={{ mt: 1 }}>

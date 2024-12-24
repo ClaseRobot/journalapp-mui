@@ -35,8 +35,8 @@ export const registerUserWithEmailPassword = async({email, password, displayName
     const resp = await createUserWithEmailAndPassword(FirebaseAuth, email, password)
     const { uid, photoURL } = resp.user
 
-    await updateProfile(FirebaseAuth.currentUser, { displayName })
-
+    await updateProfile(FirebaseAuth.currentUser, { displayName }) // actualiza el displayName en firebase
+    // FirebaseAuth.currentUser es el usuario logueado actualmente
     return {
       ok: true,
       uid, photoURL, email, displayName
