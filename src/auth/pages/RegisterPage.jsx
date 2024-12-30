@@ -50,7 +50,7 @@ export const RegisterPage = () => {
     <Container maxWidth='xs'>
       <Paper elevation={10} sx={{ marginTop: 8, padding: 2}}>
         <Typography variant='h5' sx={{ textAlign: 'center', mt: 2 }}>Crear cuenta</Typography>
-        <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 2, p: 2 }} autoComplete='off'>
+        <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 2, p: 2 }} autoComplete='off' className='animate__animated animate__fadeIn animate__faster'>
           
               <TextField name='displayName' value={displayName} onChange={onInputChange} type='text' variant='outlined' fullWidth placeholder='Enter name' error={ !!displayNameValid && formSubmited } helperText={ displayNameValid }/>
           

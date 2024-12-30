@@ -1,4 +1,6 @@
-// Los Thunks son acciones que puedo dispachear pero que internamente tienen una tarea asincrona
+// Los Thunks son acciones que puedo dispachear y que internamente tienen una tarea asincrona
+// Funcionan como intermediarios entre el servicio de logueo y la accion disparada
+
 import { loginWithEmailPassword, logoutFirebase, registerUserWithEmailPassword, signInWithGoogle } from "../../firebase/providers"
 import { checkingCredentials, logout, login } from "./authSlice"
 
@@ -13,11 +15,11 @@ export const startGoogleSignIn = () => { // start para indicar que da inicio a u
   return async (dispatch) => {
     dispatch(checkingCredentials())
     console.log('startGoogleSignIn')
-    const result = await signInWithGoogle()
-    console.log(result)
-    if(!result.ok) return dispatch(logout(result.errorMessage))
+    const resp = await signInWithGoogle()
+    console.log(resp)
+    if(!resp.ok) return dispatch(logout(resp.errorMessage))
     
-    dispatch(login(result))
+    dispatch(login(resp))
 
   }
 }
@@ -37,13 +39,13 @@ export const startCreatingUserWithEmailPassword = ({email, password, displayName
 
 export const startLoginWithEmailPassword = ({email, password}) => {
   return async(dispatch) => {
-    dispatch(checkingCredentials())
+    dispatch(checkingCredentials()) // cambio estado a checking y bloqueo botones
 
     const resp = await loginWithEmailPassword({email, password})
     console.log(resp)
 
     if(!resp.ok) return dispatch(logout(resp))
-    return dispatch(login(resp))
+    dispatch(login(resp))
   }
 }
 

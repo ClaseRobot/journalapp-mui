@@ -2,8 +2,11 @@ import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, Lis
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import  Grid  from '@mui/material/Grid2'
+import { useSelector } from "react-redux";
 
 export const Sidebar = ({ drawerWidth = 240 }) => {
+
+  const { displayName } = useSelector( state => state.auth );
 
   return (
     <Box component='nav' sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }}}>
@@ -16,7 +19,7 @@ export const Sidebar = ({ drawerWidth = 240 }) => {
         }}
       >
         <Toolbar>
-          <Typography variant='h6' nowrap='true' component='div'>Jon Doe</Typography>
+          <Typography variant='h6' nowrap='true' component='div'>{ displayName }</Typography>
         </Toolbar>
         <Divider />
         <List>

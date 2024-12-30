@@ -63,7 +63,7 @@ export const loginWithEmailPassword = async({email, password}) => {
     }
 
   } catch (error) {
-    console.log(error)
+    
     return {
       ok: false,
       errorMessage: error.message

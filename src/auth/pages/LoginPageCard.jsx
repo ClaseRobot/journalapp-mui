@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Box, Button, TextField, Typography, Link, Container, Paper, Avatar, FormControlLabel, Grid2, Alert } from '@mui/material'
 import { CheckBox, Google } from '@mui/icons-material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth/thunks'
+import { startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth/thunks'
 import { useForm } from '../../hooks/useForm'
 
 export const LoginCard = () => {
@@ -31,7 +31,6 @@ export const LoginCard = () => {
     e.preventDefault()
     console.log('Login con: ', email, password)
 
-    dispatch(checkingAuthentication(email, password))
     dispatch(startLoginWithEmailPassword( {email, password} ))
 
     // onResetForm()
@@ -46,10 +45,10 @@ export const LoginCard = () => {
         <Typography component='h1' variant='h5' sx={{ textAlign: 'center'}}>
           Sign In
         </Typography>
-        <Box component='form' onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component='form' onSubmit={onSubmit} noValidate sx={{ mt: 1 }} className='animate__animated animate__fadeIn animate__faster'>
           <TextField name='email' onChange={onInputChange} type='email' value={email} placeholder='Enter email' fullWidth required autoFocus sx={{ mb: 2 }} />
           <TextField name='password' onChange={onInputChange} type='password' value={password} placeholder='Enter password' fullWidth required />
-          <FormControlLabel sx={{ ml: '-2px', mt: 1 }} control={<CheckBox value='remember' color='primary'/> } label='Remember me' />
+          <FormControlLabel sx={{ ml: '-2px', mt: 1, mb: 1 }} control={<CheckBox value='remember' color='primary'/> } label='Remember me' />
           <Box display={!!errorMessage ? '' : 'none'}>
             <Alert severity='error'>{ errorMessage }</Alert>
           </Box>
