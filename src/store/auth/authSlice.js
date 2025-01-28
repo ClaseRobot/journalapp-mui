@@ -1,3 +1,4 @@
+// Lo slices son el estado del store
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -6,10 +7,10 @@ const initialState = {
   email: null,
   displayName: null,
   photoURL: null,
-  errorMessage: null,
+  errorMessage: null, 
 }
 
-export const authSlice = createSlice({
+export const authSlice = createSlice({ 
   name: 'auth',
   initialState,
   reducers: {

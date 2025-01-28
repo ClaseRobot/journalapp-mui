@@ -1,12 +1,12 @@
-import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material"
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import  Grid  from '@mui/material/Grid2'
+import { Box, Divider, Drawer, List, Toolbar, Typography } from "@mui/material"
 import { useSelector } from "react-redux";
+import { SideBarItem } from "./";
 
 export const Sidebar = ({ drawerWidth = 240 }) => {
 
   const { displayName } = useSelector( state => state.auth );
+  const { notes } = useSelector( state => state.journal ) 
+  console.log(notes)
 
   return (
     <Box component='nav' sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }}}>
@@ -24,18 +24,8 @@ export const Sidebar = ({ drawerWidth = 240 }) => {
         <Divider />
         <List>
           {
-            ['Inbox', 'Starred', 'Send email', 'Drafts'].map(( text, index ) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <Grid container >
-                    <ListItemText primary={text} />
-                    <ListItemText secondary="¿Qué se cree usted? ¿Que todos los políticos de mi partido venimos de la pata del Cid?" />
-                  </Grid>
-                </ListItemButton>
-              </ListItem>
+            notes.map(( note, index ) => (
+              <SideBarItem key={note.id} {...note} index={index} />
             ))
           }
         </List>
