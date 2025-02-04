@@ -8,15 +8,17 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth/thunks'
 import { useForm } from '../../hooks/useForm'
 
+const formData = {
+  email: '',
+  password: ''
+}
+
 export const LoginCard = () => {
   const dispatch = useDispatch()
 
   const { status, errorMessage } = useSelector(state => state.auth)
 
-  const { email, password, onInputChange, onResetForm } = useForm({
-    email: '',
-    password: ''
-  })
+  const { email, password, onInputChange, onResetForm } = useForm(formData)
 
   const isAuthenticating = useMemo(() => status === 'checking', [status])
 
@@ -69,7 +71,7 @@ export const LoginCard = () => {
         <Grid2 container justifyContent='space-between' sx={{ mt: 1 }}>
           <Grid2 item='true'>
             <Link component={RouterLink} to='/auth/forgot' sx={{ textDecoration: 'none'}}>
-              Forgot Password?
+              Forgot Password??
             </Link>
           </Grid2>
           <Grid2 item='true'>

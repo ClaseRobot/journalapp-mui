@@ -12,7 +12,7 @@ export const loadNotes = async( uid = '') => {
     notes.push({ id: doc.id, ...doc.data()})
   })
   
-  console.log(docs)
+  // console.log(docs)
 
   return notes
 }

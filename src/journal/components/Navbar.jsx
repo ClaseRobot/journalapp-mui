@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux"
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material"
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material"
-import  Grid  from '@mui/material/Grid2'
 import { startLogout } from "../../store/auth/thunks"
 
 
